@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision X Smart Glasses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-1: #0a1626;
+            --bg-2: #0f2032;
+            --panel: rgba(255, 255, 255, 0.04);
+            --stroke: rgba(255, 255, 255, 0.08);
+            --text: #e8f1f7;
+            --muted: #9db4c8;
+            --accent: #00f0b5;
+            --accent-2: #ff9d42;
+            --card-glow: 0 20px 60px rgba(0, 240, 181, 0.12);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(0, 240, 181, 0.07), transparent 32%),
+                radial-gradient(circle at 80% 10%, rgba(255, 157, 66, 0.07), transparent 30%),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main {
+            padding: 48px 20px 80px;
+        }
+
+        .shell {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(150deg, rgba(0, 240, 181, 0.9), rgba(255, 157, 66, 0.8));
+            display: grid;
+            place-items: center;
+            color: #0a1626;
+            font-weight: 700;
+            font-size: 18px;
+            box-shadow: 0 10px 30px rgba(0, 240, 181, 0.15);
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chip {
+            border: 1px solid var(--stroke);
+            color: var(--muted);
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.14);
+            color: var(--text);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--stroke);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            background: linear-gradient(120deg, rgba(0, 240, 181, 0.22), rgba(255, 157, 66, 0.18));
+            backdrop-filter: blur(6px);
+            box-shadow: var(--card-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 24px 60px rgba(0, 240, 181, 0.2);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(0, 240, 181, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(0, 240, 181, 0.2);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(38px, 6vw, 58px);
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .stat {
+            padding: 14px 16px;
+            border: 1px solid var(--stroke);
+            border-radius: 14px;
+            background: var(--panel);
+        }
+
+        .stat .label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .stat .value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--text);
+        }
+
+        .glass-preview {
+            position: relative;
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid var(--stroke);
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(0, 240, 181, 0.05));
+            overflow: hidden;
+            box-shadow: var(--card-glow);
+            min-height: 340px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .glass-preview:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 240, 181, 0.25);
+            box-shadow: 0 26px 60px rgba(0, 240, 181, 0.18);
+        }
+
+        .glass-preview::before,
+        .glass-preview::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 240, 181, 0.07), transparent 60%);
+            filter: blur(2px);
+        }
+
+        .glass-preview::before {
+            top: -80px;
+            left: -40px;
+        }
+
+        .glass-preview::after {
+            bottom: -100px;
+            right: -60px;
+            background: radial-gradient(circle, rgba(255, 157, 66, 0.08), transparent 60%);
+        }
+
+        .hud-card {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 12px;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 22, 38, 0.8);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 20px 40px rgba(0, 0, 0, 0.25);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .hud-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 240, 181, 0.2);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 26px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .hud-vision {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .hud-scan {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 0 rgba(0, 240, 181, 0.5);
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 240, 181, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 16px rgba(0, 240, 181, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 240, 181, 0);
+            }
+        }
+
+        .pill-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        section+section {
+            margin-top: 36px;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .section-head h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-head p {
+            color: var(--muted);
+            max-width: 640px;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .card {
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid var(--stroke);
+            background: var(--panel);
+            display: grid;
+            gap: 8px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 240, 181, 0.18);
+            box-shadow: 0 18px 40px rgba(0, 240, 181, 0.12);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .flow .step {
+            position: relative;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px dashed rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.02);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .flow .step:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 240, 181, 0.35);
+            background: rgba(0, 240, 181, 0.04);
+        }
+
+        .step .num {
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            background: rgba(0, 240, 181, 0.14);
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .dual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .list-item {
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--stroke);
+            background: rgba(255, 255, 255, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .list-item:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .badge-mini {
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: rgba(0, 240, 181, 0.15);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 12px;
+            border: 1px solid rgba(0, 240, 181, 0.2);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--stroke);
+            color: var(--muted);
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .section-head {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cta-row {
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .cl {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="shell">
+        <header>
+            <div class="brand">
+                <div class="brand-mark">VX</div>
+                <div>
+                    <div style="font-weight:700;">Vision X</div>
+                    <div style="color:var(--muted); font-size:13px;">Context-aware smart glasses</div>
+                </div>
+            </div>
+            <nav>
+                <span class="chip">Live object detection</span>
+                <span class="chip">Phone notifications</span>
+                <a class="btn" href="#system">System map</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div>
+                <div class="badge">New | Vision X headset</div>
+                <h1>See the real world, annotated in real time.</h1>
+                <p>Vision X pairs an on-board camera, object detection, and a lightweight OLED to show what matters:
+                    identified objects, alerts from your phone, and status of the Bluetooth pipeline.</p>
+                <div class="cta-row">
+                    <a class="btn" href="#hud">View HUD preview</a>
+                    <a class="btn" href="#notifications"
+                        style="background:rgba(255,157,66,0.16); border-color:rgba(255,157,66,0.3);">See
+                        notifications</a>
+                </div>
+                <div class="meta-grid">
+                    <div class="stat">
+                        <div class="label">Detection latency</div>
+                        <div class="value">180 ms</div>
+                    </div>
+                    <div class="stat">
+                        <div class="label">HUD resolution</div>
+                        <div class="value">128 x 64 OLED</div>
+                    </div>
+                    <div class="stat">
+                        <div class="label">Wireless link</div>
+                        <div class="value">Bluetooth LE</div>
+                    </div>
+                    <div class="stat">
+                        <div class="label">Phone channel</div>
+                        <div class="value">Encrypted relay</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-preview" id="hud">
+                <div class="hud-card">
+                    <div class="hud-top">
+                        <span>Live scene | On-device</span>
+                        <div class="hud-scan">
+                            <span class="pulse"></span>
+                            <span>Scanning</span>
+                        </div>
+                    </div>
+                    <div class="hud-vision">Object: Coffee mug</div>
+                    <div class="pill-row">
+                        <span class="pill">Confidence 0.94</span>
+                        <span class="pill">Distance 0.8 m</span>
+                        <span class="pill">Tracking stable</span>
+                    </div>
+                    <div class="list-item" style="margin-top:10px;">
+                        <div>
+                            <div style="font-weight:700;">Phone alert | WhatsApp</div>
+                            <div style="color:var(--muted);">"Project kickoff moved to 2 PM."</div>
+                        </div>
+                        <span class="badge-mini">Mirrored</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="system">
+            <div class="section-head">
+                <h2>Pipeline at a glance</h2>
+                <p>Camera captures reality, the model detects objects, data is sent to the phone for context, and the
+                    OLED overlays the insight. Bluetooth keeps the glasses and phone in sync.</p>
+            </div>
+            <div class="flow">
+                <div class="step">
+                    <div class="num">01</div>
+                    <h3>Camera intake</h3>
+                    <p>Frame stream enters the embedded vision block for feature extraction.</p>
+                </div>
+                <div class="step">
+                    <div class="num">02</div>
+                    <h3>Object detection</h3>
+                    <p>Detectors classify objects, names are passed to the HUD buffer.</p>
+                </div>
+                <div class="step">
+                    <div class="num">03</div>
+                    <h3>Phone relay</h3>
+                    <p>Bidirectional BLE channel moves names and phone notifications.</p>
+                </div>
+                <div class="step">
+                    <div class="num">04</div>
+                    <h3>OLED output</h3>
+                    <p>128 x 64 OLED prints the object label and mirrored notifications.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">
+                <h2>What you see</h2>
+                <p>A HUD tuned for clarity: names, confidence, distance, and active phone alerts formatted to fit the
+                    OLED without noise.</p>
+            </div>
+            <div class="dual">
+                <div class="card">
+                    <span class="tag">HUD essentials</span>
+                    <h3>Object labels stay readable</h3>
+                    <p>High-contrast typography and compact spacing keep object names legible on the OLED.</p>
+                    <div class="list">
+                        <div class="list-item">
+                            <span>Adaptive font sizing</span>
+                            <span class="badge-mini">Auto</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Confidence + distance</span>
+                            <span class="badge-mini">Live</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Stability indicator</span>
+                            <span class="badge-mini">Lock</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" id="notifications">
+                    <span class="tag">Phone notifications</span>
+                    <h3>Alerts mirror instantly</h3>
+                    <p>BLE keeps a lightweight notification queue so messages, calls, and app alerts appear the moment
+                        your phone receives them.</p>
+                    <div class="list">
+                        <div class="list-item">
+                            <span>Messaging apps</span>
+                            <span class="badge-mini">WhatsApp / SMS</span>
+                        </div>
+                        <div class="list-item">
+                            <span>Calendar + tasks</span>
+                            <span class="badge-mini">Priority</span>
+                        </div>
+                        <div class="list-item">
+                            <span>System events</span>
+                            <span class="badge-mini">Battery / Calls</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-head">
+                <h2>Hardware snapshots</h2>
+                <p>Designed for lean power draw and reliable wireless coverage - ready for labs, field work, and demos.
+                </p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <span class="tag">Camera</span>
+                    <h3>Scene intake</h3>
+                    <p>Wide FoV sensor streams video to the detection stack for continuous labeling.</p>
+                </div>
+                <div class="card">
+                    <span class="tag">Bluetooth</span>
+                    <h3>Phone bridge</h3>
+                    <p>Wireless link carries object names to the phone and returns notifications to the OLED.</p>
+                </div>
+                <div class="card">
+                    <span class="tag">OLED</span>
+                    <h3>Readable overlay</h3>
+                    <p>128 x 64 monochrome panel with crisp contrast for text-first overlays.</p>
+                </div>
+                <div class="card">
+                    <span class="tag">Battery</span>
+                    <h3>All-day runtime</h3>
+                    <p>Low-power detection loop keeps runtimes steady without heavy thermal load.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <span>Vision X | Context-aware smart glasses</span>
+            <span>Camera -> Detection -> Phone -> OLED</span>
+            <p>Developed by <a href="www.nihan-vp.me" class="cl">Nihan</a></p>
+        </footer>
+    </main>
+</body>
+
+</html>
